@@ -24,7 +24,16 @@
             </p>
             <h6>by: {{ $answer->user->name }} about {{ $answer->created_at->diffForHumans() }}</h6>
             @if($answer->user->id == $user_id)
-              <a href="{{ route('answers.edit',$answer->id)}}"><button>Edit</button></a>
+              <div class="" style="display:inline;">
+                <a href="{{ route('answers.edit',$answer->id)}}"><button class="btn btn-primary">Edit</button></a>
+                <form class="" action="{{ route('answers.destroy',$answer->id)}}" method="post" style="float:left;
+                  margin-right:10px;">
+                  {{ csrf_field() }}
+                    <input type="hidden" name="_method" value="Delete">
+                    <input type="submit" name="" value="Delete" class="btn btn-danger">
+                </form>
+              </div>
+
             @endif
           </div>
         </div>

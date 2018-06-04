@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Answer;
 use App\Question;
 use Auth;
+use Session;
+use App\Notifications\NewAnswerSubmitted;
 class AnswersController extends Controller
 {
 
@@ -35,6 +37,9 @@ class AnswersController extends Controller
         //$answer->question_id = $request->question_id;
         $question = Question::findOrFail($request->question_id);
         $result = $question->answers()->save($answer);
+        Session::flash('success', 'Answer has been saved');
+        // trigger notification..
+        $question->user->notify(new NewAnswerSubmitted($question,$answer,Auth::user()->name));
         return redirect()->route('questions.show',$question->id);
     }
 
@@ -61,19 +66,25 @@ class AnswersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $this->validate($request, [
           'content'=>"required|min:10|max:1000",
         ]);
-        //
+        // get the answer
         $answer = Answer::findOrFail($id);
         $answer->content = $request->content;
-        $answer->update();
-        $question = Question::findOrFail($answer->question_id);
-      //  var_dump($question); die();
-        //return redirect()->route('questions.show',$question); */
-        return redirect()->route('questions.index');
-        //return back()->withInput();
+        if(Auth::id() == $answer->user_id){
+          $answer->save();
+          Session::flash('success', 'Answer has been Updated');
+        }else{
+          Session::flash('not_success', 'You do not have permision to delete this answer');
+        }
+        // save the answer
+
+        $qid = $answer->question_id;
+
+        // return redirect
+        return redirect()->route('questions.show',$qid);
 
     }
 
@@ -85,6 +96,18 @@ class AnswersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // find the answer
+        $answer = Answer::findOrFail($id);
+
+        $qid = $answer->question_id;
+        if($answer->user_id == Auth::id()){
+          $answer->delete();
+          Session::flash('success','Answer has been deleted');
+        }else{
+          Session::flash('not_success','You do not have permision to delete this answer');
+        }
+
+        return redirect()->route('questions.show',$qid);
+
     }
 }

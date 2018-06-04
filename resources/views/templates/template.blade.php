@@ -17,6 +17,7 @@
         @include('_includes.navs.topnav1')
         @yield('content')
 
+        @include('_includes.messages')
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
     </body>

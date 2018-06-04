@@ -16,7 +16,7 @@ class PageController extends Controller
   }
   public function profile($id){
     // get the user info..
-    $user = User::with(['questions','answers','answer.question'])->findOrFail($id);
+    $user = User::with(['questions','answers','answers.question'])->findOrFail($id);
     return view('pages.profile')->with('user',$user);
   }
   public function contact()
