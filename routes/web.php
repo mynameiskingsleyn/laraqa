@@ -24,3 +24,5 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/profile/{user}','PageController@profile')->name('profile');
+Route::get('/contact','PageController@contact')->name('contact');
+Route::post('/contact','PageController@sendContact');

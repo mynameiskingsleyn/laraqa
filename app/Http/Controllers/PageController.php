@@ -1,6 +1,10 @@
 <?php
 namespace App\Http\Controllers;
+use Illuminate\Http\Request;
 use App\User;
+use Mail;
+use App\Mail\ContactForm;
+use Session;
 class PageController extends Controller
 {
   public function index(){
@@ -14,6 +18,22 @@ class PageController extends Controller
     // get the user info..
     $user = User::with(['questions','answers','answer.question'])->findOrFail($id);
     return view('pages.profile')->with('user',$user);
+  }
+  public function contact()
+  {
+    return view('pages.contact');
+  }
+  public function sendContact(Request $request)
+  {
+    $this->validate($request,
+      ['name'=>'required',
+       'email'=>'required|email',
+       'subject' => 'required|min:3|max:100',
+       'message'=>'required|min:10|max:500'
+      ]);
+      Mail::to('admin@example.com')->send(new ContactForm($request));
+      Session::flash('success','Your email has been sent');
+      return redirect()->route('contact');
   }
 
 }
