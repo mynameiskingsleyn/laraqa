@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace LaraQA\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Question;
+use LaraQA\Question;
 use Auth;
-//use Session;
+use Session;
 class QuestionController extends Controller
 {
     public function __construct()
@@ -93,7 +93,7 @@ class QuestionController extends Controller
         //
         $question = Question::findOrFail($id);
         if($question->user->id != Auth::id()){
-          return abort(403);
+          return abort(404,"Permision not allowed");
         }
         return view('questions.edit')->with('question',$question);
     }
@@ -108,10 +108,10 @@ class QuestionController extends Controller
     public function update(Request $request, $id)
     {
         // Validate the database
-        return redirect()->route('questions.index');
+      //  return redirect()->route('questions.index');
        $this->validate($request,[
-          //'title' => 'required|max:255',
-          //'description' =>'required'
+          'title' => 'required|max:255',
+          'description' =>'required'
         ]);
 
         // save the data to the database
@@ -124,12 +124,12 @@ class QuestionController extends Controller
 */
          $question->save();
         // set flash data with success message
-        //Session::flash('success','Question updated');
+        Session::flash('success','Question updated');
 
         // redirect with flash data to question.show.
-        //die($question->title);
-        //return redirect()->route('questions.show',$question->id);
-        return redirect()->route('questions.index');
+
+        return redirect()->route('questions.show',$question->id);
+        //return redirect()->route('questions.index');
     }
 
     /**

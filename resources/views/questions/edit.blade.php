@@ -4,8 +4,9 @@
   <h1>Ask a Question</h1>
   <hr/>
 
-  <form class="" action="{{ route('questions.update',$question->id) }}" method="PUT">
-      
+  <form class="" action="{{ route('questions.update',$question->id) }}" method="POST">
+      {{ csrf_field() }}
+      {{ method_field('PUT') }}
       <div class="form-group">
           <label for="title">Question</label>
           <input type="text" name="title" id="title" value="{{$question->title}}" class="form-control">

@@ -36,7 +36,7 @@ return [
     ],
 
     'stripe' => [
-        'model' => App\User::class,
+        'model' => LaraQA\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],

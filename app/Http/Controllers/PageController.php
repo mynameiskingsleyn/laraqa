@@ -1,9 +1,9 @@
 <?php
-namespace App\Http\Controllers;
+namespace LaraQA\Http\Controllers;
 use Illuminate\Http\Request;
-use App\User;
+use LaraQA\User;
 use Mail;
-use App\Mail\ContactForm;
+use LaraQA\Mail\ContactForm;
 use Session;
 class PageController extends Controller
 {

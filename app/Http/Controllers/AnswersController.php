@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace LaraQA\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Answer;
-use App\Question;
+use LaraQA\Answer;
+use LaraQA\Question;
 use Auth;
 use Session;
-use App\Notifications\NewAnswerSubmitted;
+use LaraQA\Notifications\NewAnswerSubmitted;
 class AnswersController extends Controller
 {
 

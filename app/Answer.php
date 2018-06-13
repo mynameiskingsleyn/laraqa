@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace LaraQA;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,9 +8,9 @@ class Answer extends Model
 {
     //
     public function question(){
-      return $this->belongsTo('App\Question');
+      return $this->belongsTo('LaraQA\Question');
     }
     public function user(){
-      return $this->belongsTo('App\User');
+      return $this->belongsTo('LaraQA\User');
     }
 }

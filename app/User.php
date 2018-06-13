@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace LaraQA;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -33,9 +33,9 @@ class User extends Authenticatable
     ];
 
     public function questions(){
-      return $this->hasMany('App\Question');
+      return $this->hasMany('LaraQA\Question');
     }
     public function answers(){
-      return $this->hasMany('App\Answer');
+      return $this->hasMany('LaraQA\Answer');
     }
 }
