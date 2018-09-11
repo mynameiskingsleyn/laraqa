@@ -16,7 +16,7 @@
     <hr/>
     <!-- display all of the answers for the question -->
     @if($question->answers()->count() > 0)
-      @foreach($question->answers as $answer)
+      @foreach($question->answers->reverse() as $answer)
         <div class="panel panel-default">
           <div class="panel-body">
             <p>
@@ -26,11 +26,10 @@
             @if($answer->user->id == $user_id)
               <div class="" style="display:inline;">
                 <a href="{{ route('answers.edit',$answer->id)}}"><button class="btn btn-primary">Edit</button></a>
-                <form class="" action="{{ route('answers.destroy',$answer->id)}}" method="post" style="float:left;
-                  margin-right:10px;">
+                <form class="" action="{{ route('answers.destroy',$answer->id)}}" method="post" style="float:left;margin-right:10px;" >
                   {{ csrf_field() }}
                     <input type="hidden" name="_method" value="Delete">
-                    <input type="submit" name="" value="Delete" class="btn btn-danger">
+                    <input type="submit" name="" value="Delete" class="btn btn-danger"/>
                 </form>
               </div>
 
